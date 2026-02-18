@@ -215,14 +215,14 @@
       padding: 16px 20px;
       display: grid;
       grid-template-columns: 1fr auto;
-      align-items: center;
+      align-items: stretch;
       gap: 16px;
       transition: box-shadow 0.15s ease;
       cursor: default;
     }
     .item:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
 
-    .item-left { display: flex; flex-direction: column; gap: 4px; }
+    .item-left { display: flex; flex-direction: column; gap: 4px; justify-content: center; }
 
     .item-name {
       font-size: 14px;
@@ -387,39 +387,68 @@
       background: var(--border);
     }
 
-    /* ── BUDGET NOTE ── */
-    .budget-banner {
-      background: var(--charcoal);
-      border-radius: 3px;
-      padding: 20px 24px;
-      margin-bottom: 48px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 24px;
-      flex-wrap: wrap;
+    /* ── DECIDED STATE ── */
+    .item.decided {
+      background: #F6ECD8;
+      border-color: var(--gold);
+      border-left: 3px solid var(--gold);
     }
-    .budget-text {
-      font-size: 13px;
-      color: rgba(255,255,255,0.6);
-      line-height: 1.5;
-    }
-    .budget-text strong { color: var(--gold-light); }
-    .budget-amount {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 28px;
-      font-weight: 300;
-      color: var(--warm-white);
-      white-space: nowrap;
-    }
-    .budget-amount span {
-      font-size: 13px;
-      font-weight: 400;
-      font-family: 'DM Sans', sans-serif;
-      color: rgba(255,255,255,0.4);
+    .item.decided .item-name { color: #6B4C1A; }
+    .item.decided .item-note { color: #9B7835; }
+
+    /* ── DECIDED TOGGLE BUTTON ── */
+    .decided-btn {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: transparent;
+      cursor: pointer;
+      flex-shrink: 0;
+      align-self: flex-end;
+      margin-top: auto;
+      transition: background 0.2s, border-color 0.2s;
+      padding: 0;
       display: block;
+    }
+    .decided-btn:hover { border-color: var(--gold); }
+    .item.decided .decided-btn {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+
+    /* ── PER-ITEM INPUTS (budget + actual) ── */
+    .item-inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: flex-end;
+    }
+    .cost-prefix-sm {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--warm-gray);
+      white-space: nowrap;
+      min-width: 60px;
       text-align: right;
     }
+    .budget-item-input {
+      width: 110px;
+      border: 1px solid var(--border);
+      background: var(--cream);
+      padding: 5px 8px;
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--charcoal);
+      border-radius: 2px;
+      text-align: right;
+      transition: border-color 0.15s, background 0.15s;
+      -moz-appearance: textfield;
+    }
+    .budget-item-input::-webkit-outer-spin-button,
+    .budget-item-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .budget-item-input:focus { outline: none; border-color: var(--gold); background: var(--warm-white); }
+    .budget-item-input::placeholder { color: #CEC5BA; }
 
     /* ── FOOTER ── */
     footer {
@@ -467,10 +496,10 @@
     <div class="hero-inner">
       <p class="hero-eyebrow">Renovation Project Brief · 2026</p>
       <h1>Our Home,<br /><em>Reimagined</em></h1>
-      <p class="hero-sub">Clifton, Karachi &nbsp;·&nbsp; Family Review Document</p>
+      <p class="hero-sub">Clifton, Karachi &nbsp;·&nbsp; Project Review Document</p>
       <div class="stats-bar">
         <div class="stat">
-          <span class="stat-num" id="totalCount">27</span>
+          <span class="stat-num" id="totalCount">28</span>
           <span class="stat-label">Total Items</span>
         </div>
         <div class="stat-divider"></div>
@@ -509,32 +538,27 @@
   <!-- NOTICE -->
   <div class="notice">
     <div class="notice-box">
-      <strong>Family – please review.</strong> Items are currently marked as "To Decide". Once you've discussed priorities, Hasan will update phases and share the final phased plan with the interior consultant for estimates and timeline.
+      <strong>For review by all stakeholders</strong> — family members and the interior designer. Items are currently marked as "To Decide". Once priorities are aligned, Hasan will update phases and circulate the final phased plan for estimates and timeline. Use the <em>decided</em> dot on each item to mark what's been agreed upon.
     </div>
   </div>
 
   <!-- MAIN CONTENT -->
   <main class="main">
 
-    <!-- Budget Banner -->
-    <div class="budget-banner">
-      <div class="budget-text">
-        <strong>Lounge sofas already quoted separately.</strong><br />
-        19-seat modular U-shaped sectional with channel tufted backs + 3 wooden tables.
-      </div>
-      <div class="budget-amount">
-        Rs. 0.5–0.6M
-        <span>Sofa budget (separate)</span>
-      </div>
-    </div>
-
     <!-- LOUNGE -->
     <div class="section">
       <div class="section-header">
         <h2 class="section-title">Lounge</h2>
-        <span class="section-count">8 items</span>
+        <span class="section-count">9 items</span>
       </div>
       <div class="items">
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Modular sectional sofa – 19-seat U-shaped with channel tufted backs + 3 wooden tables</span>
+            <span class="item-note">Already quoted separately · Budget: Rs. 0.5 – 0.6M</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
         <div class="item">
           <div class="item-left">
             <span class="item-name">Lime wash paint – walls, labor &amp; material</span>
@@ -832,18 +856,38 @@
     document.getElementById('phase2Count').textContent = p2 || '—';
     document.getElementById('tbdCount').textContent = tbd;
 
-    // Inject cost inputs into every item
+    // Inject per-item budget + actual inputs and decided toggle into every item
     document.querySelectorAll('.item').forEach(item => {
       const badge = item.querySelector('.item-badge');
       if (!badge) return;
+
       const right = document.createElement('div');
       right.className = 'item-right';
       item.appendChild(right);
       right.appendChild(badge);
-      const costWrap = document.createElement('div');
-      costWrap.className = 'cost-wrap';
-      costWrap.innerHTML = '<span class="cost-prefix">Rs.</span><input type="number" class="cost-input" placeholder="—" min="0" step="1000" aria-label="Enter cost in rupees">';
-      right.appendChild(costWrap);
+
+      // Stacked budget + actual inputs
+      const inputs = document.createElement('div');
+      inputs.className = 'item-inputs';
+
+      const budgetWrap = document.createElement('div');
+      budgetWrap.className = 'cost-wrap';
+      budgetWrap.innerHTML = '<span class="cost-prefix-sm">Budget Rs.</span><input type="number" class="budget-item-input" placeholder="—" min="0" step="1000" aria-label="Item budget in rupees">';
+      inputs.appendChild(budgetWrap);
+
+      const actualWrap = document.createElement('div');
+      actualWrap.className = 'cost-wrap';
+      actualWrap.innerHTML = '<span class="cost-prefix-sm">Actual Rs.</span><input type="number" class="cost-input" placeholder="—" min="0" step="1000" aria-label="Actual cost in rupees">';
+      inputs.appendChild(actualWrap);
+
+      right.appendChild(inputs);
+
+      // Decided toggle bullet (bottom-right)
+      const decidedBtn = document.createElement('button');
+      decidedBtn.className = 'decided-btn';
+      decidedBtn.title = 'Mark as decided';
+      decidedBtn.addEventListener('click', () => item.classList.toggle('decided'));
+      right.appendChild(decidedBtn);
     });
 
     // Inject budget inputs + category total rows into each section
