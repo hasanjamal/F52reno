@@ -182,12 +182,14 @@
     .section { margin-bottom: 52px; }
     .section-header {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       gap: 16px;
       margin-bottom: 16px;
       padding-bottom: 12px;
       border-bottom: 1px solid var(--border);
+      justify-content: space-between;
     }
+    .section-header-left { display: flex; align-items: baseline; gap: 16px; }
     .section-title {
       font-family: 'Cormorant Garamond', serif;
       font-size: 26px;
@@ -302,6 +304,88 @@
     .cost-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
     .cost-input:focus { outline: none; border-color: var(--gold); background: var(--warm-white); }
     .cost-input::placeholder { color: #CEC5BA; }
+
+    /* ── SECTION BUDGET INPUT ── */
+    .budget-input-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .budget-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+    }
+    .budget-input {
+      width: 120px;
+      border: 1px solid var(--border);
+      background: var(--cream);
+      padding: 5px 8px;
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--charcoal);
+      border-radius: 2px;
+      text-align: right;
+      transition: border-color 0.15s, background 0.15s;
+      -moz-appearance: textfield;
+    }
+    .budget-input::-webkit-outer-spin-button,
+    .budget-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .budget-input:focus { outline: none; border-color: var(--gold); background: var(--warm-white); }
+    .budget-input::placeholder { color: #CEC5BA; }
+
+    /* ── CATEGORY TOTAL ROW ── */
+    .category-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--border);
+      border-radius: 0 0 3px 3px;
+      margin-top: -1px;
+    }
+    .category-total-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+    }
+    .category-total-right {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+    }
+    .category-total-item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+    }
+    .category-total-sublabel {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+    }
+    .category-total-amount {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--charcoal);
+    }
+    .category-total-amount.over-budget { color: #C00000; }
+    .category-divider {
+      width: 1px;
+      height: 28px;
+      background: var(--border);
+    }
 
     /* ── BUDGET NOTE ── */
     .budget-banner {
@@ -754,7 +838,7 @@
       if (!badge) return;
       const right = document.createElement('div');
       right.className = 'item-right';
-      item.appendChild(right);   // append first so badge moves into it
+      item.appendChild(right);
       right.appendChild(badge);
       const costWrap = document.createElement('div');
       costWrap.className = 'cost-wrap';
@@ -762,7 +846,67 @@
       right.appendChild(costWrap);
     });
 
-    // Live total calculation
+    // Inject budget inputs + category total rows into each section
+    document.querySelectorAll('.section').forEach(section => {
+      const header = section.querySelector('.section-header');
+      const itemsEl = section.querySelector('.items');
+
+      // Wrap existing header children in .section-header-left
+      const left = document.createElement('div');
+      left.className = 'section-header-left';
+      while (header.firstChild) left.appendChild(header.firstChild);
+      header.appendChild(left);
+
+      // Budget input on the right of the header
+      const budgetWrap = document.createElement('div');
+      budgetWrap.className = 'budget-input-wrap';
+      budgetWrap.innerHTML = '<span class="budget-label">Budget</span><span class="cost-prefix">Rs.</span><input type="number" class="budget-input" placeholder="—" min="0" step="1000" aria-label="Enter section budget">';
+      header.appendChild(budgetWrap);
+
+      // Category total row below items
+      const totalRow = document.createElement('div');
+      totalRow.className = 'category-total';
+      totalRow.innerHTML = `
+        <span class="category-total-label">Category Total</span>
+        <div class="category-total-right">
+          <div class="category-total-item">
+            <span class="category-total-sublabel">Actual</span>
+            <span class="category-total-amount actual-total">—</span>
+          </div>
+          <div class="category-divider"></div>
+          <div class="category-total-item">
+            <span class="category-total-sublabel">Budget</span>
+            <span class="category-total-amount budget-display">—</span>
+          </div>
+        </div>`;
+      itemsEl.parentNode.insertBefore(totalRow, itemsEl.nextSibling);
+    });
+
+    // Update a single section's category total
+    function updateCategoryTotal(section) {
+      let actual = 0, actualCount = 0;
+      section.querySelectorAll('.cost-input').forEach(inp => {
+        const val = parseFloat(inp.value);
+        if (!isNaN(val) && val > 0) { actual += val; actualCount++; }
+      });
+      const budgetVal = parseFloat(section.querySelector('.budget-input').value);
+      const budget = isNaN(budgetVal) ? null : budgetVal;
+
+      const actualEl = section.querySelector('.actual-total');
+      const budgetEl = section.querySelector('.budget-display');
+
+      actualEl.textContent = actualCount > 0 ? actual.toLocaleString('en-PK') : '—';
+      budgetEl.textContent = budget !== null ? budget.toLocaleString('en-PK') : '—';
+
+      // Highlight if over budget
+      if (budget !== null && actualCount > 0 && actual > budget) {
+        actualEl.classList.add('over-budget');
+      } else {
+        actualEl.classList.remove('over-budget');
+      }
+    }
+
+    // Live global total calculation
     function updateTotal() {
       let total = 0, count = 0;
       document.querySelectorAll('.cost-input').forEach(inp => {
@@ -774,7 +918,14 @@
     }
 
     document.addEventListener('input', e => {
-      if (e.target.classList.contains('cost-input')) updateTotal();
+      const section = e.target.closest('.section');
+      if (e.target.classList.contains('cost-input')) {
+        updateTotal();
+        if (section) updateCategoryTotal(section);
+      }
+      if (e.target.classList.contains('budget-input') && section) {
+        updateCategoryTotal(section);
+      }
     });
   </script>
 
