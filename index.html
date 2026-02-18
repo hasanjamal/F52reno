@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>House Renovation – Clifton, Karachi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #F9F5EF;
+      --warm-white: #FEFCF8;
+      --gold: #B8943F;
+      --gold-light: #D4AA5A;
+      --charcoal: #2A2520;
+      --warm-gray: #8A7F74;
+      --border: #E2D9CC;
+      --phase1: #2D5016;
+      --phase1-bg: #EEF4E8;
+      --phase2: #5C3A0A;
+      --phase2-bg: #FDF3E3;
+      --skip: #6B6B6B;
+      --skip-bg: #F0F0F0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      min-height: 100vh;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--charcoal);
+      padding: 80px 40px 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(184,148,63,0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .hero-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(42px, 7vw, 72px);
+      font-weight: 300;
+      color: var(--warm-white);
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+    .hero-sub {
+      font-size: 14px;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.05em;
+      margin-bottom: 48px;
+    }
+
+    /* Stats bar */
+    .stats-bar {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .stat {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 300;
+      color: var(--warm-white);
+    }
+    .stat-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+    .stat-divider {
+      width: 1px;
+      background: rgba(255,255,255,0.12);
+      align-self: stretch;
+    }
+
+    /* ── LEGEND BAR ── */
+    .legend-bar {
+      background: var(--warm-white);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .legend-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      margin-right: 8px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .badge.phase1 { background: var(--phase1-bg); color: var(--phase1); }
+    .badge.phase1 .badge-dot { background: var(--phase1); }
+    .badge.phase2 { background: var(--phase2-bg); color: var(--phase2); }
+    .badge.phase2 .badge-dot { background: var(--gold); }
+    .badge.tbd { background: #EEF0F8; color: #3A4080; }
+    .badge.tbd .badge-dot { background: #3A4080; }
+    .badge.skip { background: var(--skip-bg); color: var(--skip); }
+    .badge.skip .badge-dot { background: #AAAAAA; }
+
+    /* ── NOTICE ── */
+    .notice {
+      max-width: 900px;
+      margin: 32px auto 0;
+      padding: 0 40px;
+    }
+    .notice-box {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      padding: 16px 20px;
+      border-radius: 2px;
+      font-size: 13px;
+      color: var(--warm-gray);
+      line-height: 1.6;
+    }
+    .notice-box strong { color: var(--charcoal); }
+
+    /* ── MAIN CONTENT ── */
+    .main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 40px 80px;
+    }
+
+    /* ── SECTION ── */
+    .section { margin-bottom: 52px; }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--charcoal);
+      letter-spacing: 0.01em;
+    }
+    .section-count {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--warm-gray);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── ITEMS ── */
+    .items { display: flex; flex-direction: column; gap: 8px; }
+
+    .item {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 16px;
+      transition: box-shadow 0.15s ease;
+      cursor: default;
+    }
+    .item:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+
+    .item-left { display: flex; flex-direction: column; gap: 4px; }
+
+    .item-name {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--charcoal);
+      line-height: 1.4;
+    }
+    .item-note {
+      font-size: 12px;
+      color: var(--warm-gray);
+      font-style: italic;
+      line-height: 1.4;
+    }
+
+    /* URGENT flag */
+    .item.urgent {
+      border-left: 3px solid #C00000;
+      background: #FFFAF9;
+    }
+    .urgent-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #C00000;
+      margin-top: 4px;
+    }
+
+    /* Phase badge on items */
+    .item-badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .item-badge.phase1 { background: var(--phase1-bg); color: var(--phase1); }
+    .item-badge.phase2 { background: var(--phase2-bg); color: var(--phase2); }
+    .item-badge.tbd { background: #EEF0F8; color: #3A4080; }
+    .item-badge.skip { background: var(--skip-bg); color: var(--skip); }
+
+    /* ── BUDGET NOTE ── */
+    .budget-banner {
+      background: var(--charcoal);
+      border-radius: 3px;
+      padding: 20px 24px;
+      margin-bottom: 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .budget-text {
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.5;
+    }
+    .budget-text strong { color: var(--gold-light); }
+    .budget-amount {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      color: var(--warm-white);
+      white-space: nowrap;
+    }
+    .budget-amount span {
+      font-size: 13px;
+      font-weight: 400;
+      font-family: 'DM Sans', sans-serif;
+      color: rgba(255,255,255,0.4);
+      display: block;
+      text-align: right;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 40px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--warm-gray);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .hero { padding: 48px 20px 40px; }
+      .main, .notice { padding: 24px 20px 60px; }
+      .legend-bar { padding: 12px 20px; }
+      .stats-bar { gap: 24px; }
+      .item { grid-template-columns: 1fr; gap: 10px; }
+      .item-badge { align-self: flex-start; }
+      footer { padding: 20px; }
+    }
+
+    /* Fade-in animation */
+    .section {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.5s ease forwards;
+    }
+    .section:nth-child(1) { animation-delay: 0.05s; }
+    .section:nth-child(2) { animation-delay: 0.1s; }
+    .section:nth-child(3) { animation-delay: 0.15s; }
+    .section:nth-child(4) { animation-delay: 0.2s; }
+    .section:nth-child(5) { animation-delay: 0.25s; }
+    .section:nth-child(6) { animation-delay: 0.3s; }
+    .section:nth-child(7) { animation-delay: 0.35s; }
+    .section:nth-child(8) { animation-delay: 0.4s; }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Renovation Project Brief · 2025</p>
+      <h1>Our Home,<br /><em>Reimagined</em></h1>
+      <p class="hero-sub">Clifton, Karachi &nbsp;·&nbsp; Family Review Document</p>
+      <div class="stats-bar">
+        <div class="stat">
+          <span class="stat-num" id="totalCount">27</span>
+          <span class="stat-label">Total Items</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num" id="phase1Count">—</span>
+          <span class="stat-label">Phase 1</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num" id="phase2Count">—</span>
+          <span class="stat-label">Phase 2</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num" id="tbdCount">—</span>
+          <span class="stat-label">To Decide</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- LEGEND -->
+  <div class="legend-bar">
+    <span class="legend-label">Phase</span>
+    <span class="badge phase1"><span class="badge-dot"></span>Phase 1 – Do Now</span>
+    <span class="badge phase2"><span class="badge-dot"></span>Phase 2 – Later</span>
+    <span class="badge tbd"><span class="badge-dot"></span>To Decide</span>
+    <span class="badge skip"><span class="badge-dot"></span>Skip</span>
+  </div>
+
+  <!-- NOTICE -->
+  <div class="notice">
+    <div class="notice-box">
+      <strong>Family – please review.</strong> Items are currently marked as "To Decide". Once you've discussed priorities, Hasan will update phases and share the final phased plan with the interior consultant for estimates and timeline.
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- Budget Banner -->
+    <div class="budget-banner">
+      <div class="budget-text">
+        <strong>Lounge sofas already quoted separately.</strong><br />
+        19-seat modular U-shaped sectional with channel tufted backs + 3 wooden tables.
+      </div>
+      <div class="budget-amount">
+        Rs. 0.5–0.6M
+        <span>Sofa budget (separate)</span>
+      </div>
+    </div>
+
+    <!-- LOUNGE -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">Lounge</h2>
+        <span class="section-count">8 items</span>
+      </div>
+      <div class="items">
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Lime wash paint – walls, labor &amp; material</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Electrical – fan placement, chandelier, ambient &amp; daily-use lights</span>
+            <span class="item-note">New layout to be planned with consultant</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Ottoman – one or more units</span>
+            <span class="item-note">Size and style TBD after sofa layout is confirmed</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Media wall – design, build &amp; materials</span>
+            <span class="item-note">Concept and material options to be discussed with consultant</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Polish existing wooden mirror frames</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">CCTV &amp; router – conceal or relocate within lounge</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Décor items &amp; accessories</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Curtains – fabric, stitching &amp; installation</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DINING ROOM -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">Dining Room</h2>
+        <span class="section-count">4 items</span>
+      </div>
+      <div class="items">
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">8 dining chairs – deco paint + reupholster with new cushion &amp; fabric</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Full repaint of room</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Curtains – fabric, stitching &amp; installation</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Décor items &amp; accessories</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DRAWING ROOM -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">Drawing Room</h2>
+        <span class="section-count">4 items</span>
+      </div>
+      <div class="items">
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Sofas – deco paint + reupholster with new cushion &amp; fabric</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Full repaint of room</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Curtains – fabric, stitching &amp; installation</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Décor items &amp; accessories</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- KITCHEN -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">Kitchen</h2>
+        <span class="section-count">5 items</span>
+      </div>
+      <div class="items">
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Kitchen table + 6 chairs – robust, heavy-use</span>
+            <span class="item-note">Solid wood preferred, not engineered wood</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Minor repairs to existing wooden kitchen cabinets</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Grease filter / trap system – under-sink installation</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Countertop upgrade – granite or Corian</span>
+            <span class="item-note">Optional – evaluate existing first</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Appliances – cooking range, microwave, juicer</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAD'S ROOM -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">Dad's Room (Downstairs)</h2>
+        <span class="section-count">2 items</span>
+      </div>
+      <div class="items">
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Sofa – reupholster with new cushion &amp; fabric</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+        <div class="item urgent">
+          <div class="item-left">
+            <span class="item-name">Water pipe leakage fix + tile re-laying</span>
+            <span class="item-note">Ongoing water damage is loosening floor tiles and risks spreading to adjacent finishes</span>
+            <span class="urgent-tag">⚠ Flagged urgent – address regardless of phase</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MUSFIRAH'S ROOM -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">Musfirah's Room</h2>
+        <span class="section-count">2 items</span>
+      </div>
+      <div class="items">
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Existing furniture repair</span>
+            <span class="item-note">Carpenter to assess on-site</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">New sofa – size &amp; style TBD</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- UPSTAIRS LOUNGE -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">Upstairs Lounge</h2>
+        <span class="section-count">1 item</span>
+      </div>
+      <div class="items">
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">General retouch &amp; fixing</span>
+            <span class="item-note">Scope TBD after on-site assessment by consultant</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STRUCTURAL / CIVIL -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">Structural &amp; Civil Work</h2>
+        <span class="section-count">5 items</span>
+      </div>
+      <div class="items">
+        <div class="item urgent">
+          <div class="item-left">
+            <span class="item-name">Skylight leak – waterproofing and civil repair</span>
+            <span class="urgent-tag">⚠ Water ingress – urgent</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Window canopies – remove, repair &amp; reinstall</span>
+            <span class="item-note">Wood &amp; plastic; most in fair condition but need renovation</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Fiber shade / canopy over kitchen alleyway</span>
+            <span class="item-note">Fabrication and installation</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Main gate – full replacement</span>
+            <span class="item-note">Material TBD: steel / wrought iron / aluminum</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <span class="item-name">Exterior stair railing – replacement</span>
+            <span class="item-note">Material and design TBD</span>
+          </div>
+          <span class="item-badge tbd">To Decide</span>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    Clifton, Karachi &nbsp;·&nbsp; Renovation Project 2025 &nbsp;·&nbsp; Last updated: <span id="lastUpdated"></span>
+  </footer>
+
+  <script>
+    // Set last updated date
+    document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    // Count badges dynamically
+    const allBadges = document.querySelectorAll('.item-badge');
+    let p1 = 0, p2 = 0, tbd = 0, skip = 0;
+    allBadges.forEach(b => {
+      if (b.classList.contains('phase1')) p1++;
+      else if (b.classList.contains('phase2')) p2++;
+      else if (b.classList.contains('tbd')) tbd++;
+      else if (b.classList.contains('skip')) skip++;
+    });
+    document.getElementById('totalCount').textContent = allBadges.length;
+    document.getElementById('phase1Count').textContent = p1 || '—';
+    document.getElementById('phase2Count').textContent = p2 || '—';
+    document.getElementById('tbdCount').textContent = tbd;
+  </script>
+
+</body>
+</html>
