@@ -267,6 +267,42 @@
     .item-badge.tbd { background: #EEF0F8; color: #3A4080; }
     .item-badge.skip { background: var(--skip-bg); color: var(--skip); }
 
+    /* ── COST INPUT ── */
+    .item-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .cost-wrap {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .cost-prefix {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--warm-gray);
+      white-space: nowrap;
+    }
+    .cost-input {
+      width: 110px;
+      border: 1px solid var(--border);
+      background: var(--cream);
+      padding: 5px 8px;
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--charcoal);
+      border-radius: 2px;
+      text-align: right;
+      transition: border-color 0.15s, background 0.15s;
+      -moz-appearance: textfield;
+    }
+    .cost-input::-webkit-outer-spin-button,
+    .cost-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .cost-input:focus { outline: none; border-color: var(--gold); background: var(--warm-white); }
+    .cost-input::placeholder { color: #CEC5BA; }
+
     /* ── BUDGET NOTE ── */
     .budget-banner {
       background: var(--charcoal);
@@ -317,7 +353,7 @@
       .legend-bar { padding: 12px 20px; }
       .stats-bar { gap: 24px; }
       .item { grid-template-columns: 1fr; gap: 10px; }
-      .item-badge { align-self: flex-start; }
+      .item-right { align-self: flex-start; align-items: flex-start; }
       footer { padding: 20px; }
     }
 
@@ -367,6 +403,11 @@
         <div class="stat">
           <span class="stat-num" id="tbdCount">—</span>
           <span class="stat-label">To Decide</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num" id="totalCostStat" style="font-size:22px; letter-spacing:0;">—</span>
+          <span class="stat-label">Total Cost (Rs.)</span>
         </div>
       </div>
     </div>
@@ -706,6 +747,35 @@
     document.getElementById('phase1Count').textContent = p1 || '—';
     document.getElementById('phase2Count').textContent = p2 || '—';
     document.getElementById('tbdCount').textContent = tbd;
+
+    // Inject cost inputs into every item
+    document.querySelectorAll('.item').forEach(item => {
+      const badge = item.querySelector('.item-badge');
+      if (!badge) return;
+      const right = document.createElement('div');
+      right.className = 'item-right';
+      item.appendChild(right);   // append first so badge moves into it
+      right.appendChild(badge);
+      const costWrap = document.createElement('div');
+      costWrap.className = 'cost-wrap';
+      costWrap.innerHTML = '<span class="cost-prefix">Rs.</span><input type="number" class="cost-input" placeholder="—" min="0" step="1000" aria-label="Enter cost in rupees">';
+      right.appendChild(costWrap);
+    });
+
+    // Live total calculation
+    function updateTotal() {
+      let total = 0, count = 0;
+      document.querySelectorAll('.cost-input').forEach(inp => {
+        const val = parseFloat(inp.value);
+        if (!isNaN(val) && val > 0) { total += val; count++; }
+      });
+      document.getElementById('totalCostStat').textContent =
+        count > 0 ? total.toLocaleString('en-PK') : '—';
+    }
+
+    document.addEventListener('input', e => {
+      if (e.target.classList.contains('cost-input')) updateTotal();
+    });
   </script>
 
 </body>
